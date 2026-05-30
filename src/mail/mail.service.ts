@@ -18,12 +18,11 @@ export class MailService {
       from: this.from,
       to: [to],
       subject: 'Hesabınız Onaylandı — Google Authenticator Kurulumu',
-      html: this.buildQrApprovalHtml(userName),
+      html: this.buildQrApprovalHtml(userName, qrBase64),
       attachments: [
         {
           filename: 'authenticator-qr.png',
           content: Buffer.from(qrBase64, 'base64'),
-          content_id: 'qrcode',
         },
       ],
     });
@@ -46,7 +45,7 @@ export class MailService {
     }
   }
 
-  private buildQrApprovalHtml(userName: string): string {
+  private buildQrApprovalHtml(userName: string, qrBase64: string): string {
     return `<!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -83,7 +82,7 @@ export class MailService {
                 <tr>
                   <td style="padding:24px;text-align:center;">
                     <p style="margin:0 0 16px;color:#334155;font-weight:bold;font-size:15px;">QR Kodu Okutun</p>
-                    <img src="cid:qrcode" alt="Google Authenticator QR Kodu"
+                    <img src="data:image/png;base64,${qrBase64}" alt="Google Authenticator QR Kodu"
                       style="width:180px;height:180px;display:block;margin:0 auto;" />
                     <p style="margin:16px 0 0;color:#64748b;font-size:12px;">
                       QR kodu görünmüyorsa ekteki <strong>authenticator-qr.png</strong> dosyasını açın.
