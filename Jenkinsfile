@@ -26,7 +26,7 @@ pipeline {
                         docker rm mail-gateway || true
                         docker run -d --name mail-gateway --restart unless-stopped \
                             --env-file ${APP_DIR}/.env \
-                            --network corecrud_net \
+                            --network paygate_corecrud_net \
                             -p 4000:4000 ${IMAGE_NAME}:latest
                     """
                 }
@@ -66,7 +66,7 @@ pipeline {
                     docker rm mail-gateway || true
                     docker run -d --name mail-gateway --restart unless-stopped \
                         --env-file ${APP_DIR}/.env \
-                        --network corecrud_net \
+                        --network paygate_corecrud_net \
                         -p 4000:4000 ${IMAGE_NAME}:latest
                 """
             }
